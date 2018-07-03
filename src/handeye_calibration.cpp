@@ -126,13 +126,13 @@ Eigen::Affine3d estimateHandEye(const EigenAffineVector& baseToTip,
         auto& eigenCam = *t2_it;
         if (firstTransform) {
             firstEEInverse = eigenEE.inverse();
-            firstCamInverse = eigenCam.inverse();
+            firstCamInverse = eigenCam;
             ROS_INFO("Adding first transformation.");
             firstTransform = false;
         } else {
             Eigen::Affine3d robotTipinFirstTipBase = firstEEInverse * eigenEE;
             Eigen::Affine3d fiducialInFirstFiducialBase =
-                firstCamInverse * eigenCam;
+              firstCamInverse * eigenCam.inverse();
 
             rvecsArm.push_back(eigenRotToEigenVector3dAngleAxis(
                 robotTipinFirstTipBase.rotation()));
@@ -205,13 +205,13 @@ Eigen::Affine3d estimateHandEye(const EigenAffineVector& baseToTip,
         auto& eigenCam = *t2_it;
         if (firstTransform) {
             firstEEInverse = eigenEE.inverse();
-            firstCamInverse = eigenCam.inverse();
+            firstCamInverse = eigenCam;
             ROS_INFO("Adding first transformation.");
             firstTransform = false;
         } else {
             Eigen::Affine3d robotTipinFirstTipBase = firstEEInverse * eigenEE;
             Eigen::Affine3d fiducialInFirstFiducialBase =
-                firstCamInverse * eigenCam;
+              firstCamInverse * eigenCam.inverse();
 
             rvecsArm.push_back(eigenRotToEigenVector3dAngleAxis(
                 robotTipinFirstTipBase.rotation()));
